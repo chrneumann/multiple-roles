@@ -1,8 +1,3 @@
-### WordPress template
-*.log
-.htaccess
-
-# PHP Storm files
-.idea
-
-release.sh
+build
+docker/wordpress
+node_modules

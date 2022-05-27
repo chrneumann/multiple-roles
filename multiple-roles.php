@@ -2,11 +2,11 @@
 /*
 Plugin Name: Multiple Roles
 Description: Allow users to have multiple roles on one site.
-Version: 1.3.2
-Author: Florian TIAR
-Author URI: http://tiar-florian.fr
+Version: 1.3.5
+Author: Christian Neumann
+Author URI: https://utopicode.de
 Plugin URI: https://wordpress.org/plugins/multiple-roles/
-Github URI: https://github.com/Mahjouba91/multiple-roles
+Github URI: https://github.com/chrneumann/multiple-roles
 Text Domain: multiple-roles
 */
 
@@ -46,7 +46,7 @@ $column = new MDMR_Column_Controller( $model );
 add_filter( 'manage_users_columns',       array( $column, 'replace_column' ), 11 );
 add_filter( 'manage_users_custom_column', array( $column, 'output_column_content' ), 10, 3 );
 
-add_action( 'init', 'load_translation' );
-function load_translation() {
+add_action( 'init', 'mdmr_load_translation' );
+function mdmr_load_translation() {
 	load_plugin_textdomain( 'multiple-roles', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }

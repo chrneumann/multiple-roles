@@ -5,12 +5,12 @@
  * @var $roles array All applicable roles in name => label pairs.
  */
 ?><div class="md-multiple-roles">
-	<?php if ( ! empty( $roles ) ) :
-		foreach( $roles as $name => $label ) :
-			$roles[$name] = '<a href="users.php?role=' . esc_attr( $name ) . '">' . esc_html( translate_user_role( $label ) ) . '</a>';
-		endforeach;
-		echo implode( ', ', $roles );
-	else : ?>
+	<?php if ( ! empty( $roles ) ) : ?>
+		<?php $it = new CachingIterator( new ArrayIterator( $roles ) ); ?>
+		<?php foreach( $it as $name => $label ) : ?>
+			<a href="users.php?role=<?php echo esc_attr( $name ); ?>"><?php echo esc_html( translate_user_role( $label ) ) ?></a><?php if ( $it->hasNext() ) : ?>,<?php endif; ?>
+		<?php endforeach; ?>
+	<?php else : ?>
 		<span class="md-multiple-roles-no-role"><?php _e( 'None', 'multiple-roles' ); ?></span>
 	<?php endif; ?>
 </div><!-- .md-multiple-roles -->

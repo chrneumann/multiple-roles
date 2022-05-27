@@ -1,0 +1,9 @@
+{
+	"name": "multiple-roles",
+	"scripts": {
+    "build:dist": "shx test -d build && shx rm -r build; shx mkdir -p build/multiple-roles; shx cp -R languages *.php readme.txt controllers views build/multiple-roles"
+  },
+	"devDependencies": {
+		"shx": "^0.3.3"
+	}
+}

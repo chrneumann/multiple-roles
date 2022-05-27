@@ -1,0 +1,68 @@
+# Version of the Compose file format
+# Version 3 is the most current and recommended one
+version: "3.1"
+
+# Top building block that defines
+# All containers used for this service
+services:
+
+  # Container 1
+  # https://hub.docker.com/_/mysql
+  db:
+    # Image name (optinally version)
+    # https://docs.docker.com/compose/compose-file/#image
+    image: mysql:5.7
+    # Define restart policy
+    # https://docs.docker.com/compose/compose-file/#restart
+    # restart: always
+    # Volumes definition
+    # Named volume, allows persisted data but without caring where locally it is stored
+    # https://nickjanetakis.com/blog/docker-tip-28-named-volumes-vs-path-based-volumes
+    volumes:
+      - db_data:/var/lib/mysql
+    # Add environment variables
+    # https://docs.docker.com/compose/compose-file/#environment
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  # Container 2
+  # https://hub.docker.com/_/wordpress
+  wordpress:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-wp
+    # Define restart policy
+    # https://docs.docker.com/compose/compose-file/#restart
+    # restart: always
+    # Volumes definition
+    # https://docs.docker.com/compose/compose-file/#volumes
+    # Maps your local folder, to path in a container
+    # Useful for file edits
+    # I like to map only wp-content
+    # We should not care about WP core files
+    #volumes: ["./wp-content:/var/www/html"]
+    volumes:
+      - ./wordpress/:/var/www/html/
+      - ../:/var/www/html/wp-content/plugins/multiple-roles/:ro
+    # Add environment variables
+    # https://docs.docker.com/compose/compose-file/#environment
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define('DEBUG_LOG', true);
+        define('DEBUG_DISPLAY', false);
+    # Ports mapping
+    ports:
+      - 8080:80
+
+# Top building block that defines
+# All volumes used for this service
+volumes:
+  db_data:
