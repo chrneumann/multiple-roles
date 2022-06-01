@@ -5,6 +5,7 @@
  */
 class MDMR_Checklist_Controller {
 
+
 	/**
 	 * The model object.
 	 *
@@ -19,6 +20,24 @@ class MDMR_Checklist_Controller {
 	 */
 	public function __construct( $model ) {
 		$this->model = $model;
+    add_action( 'admin_enqueue_scripts', array( $this, 'remove_dropdown' ) );
+    add_action( 'show_user_profile', array( $this, 'output_checklist' ) );
+    add_action( 'edit_user_profile', array( $this, 'output_checklist' ) );
+    add_action( 'user_new_form', array( $this, 'output_checklist' ) );
+    add_action( 'profile_update', array( $this, 'process_checklist' ) );
+
+    // For new user form (in Backoffice)
+    // In multisite, user_register hook is too early so wp_mu_activate_user add user role after
+    if ( is_multisite() ) {
+	    if ( version_compare( get_bloginfo( 'version' ), '4.8', '>=' ) ) {
+		    add_filter( 'signup_site_meta', array( $this, 'mu_add_roles_in_signup_meta_recently' ), 10, 7 );
+	    } else {
+		    add_action( 'after_signup_user', array( $this, 'mu_add_roles_in_signup_meta' ), 10, 4 );
+	    }
+	    add_action( 'wpmu_activate_user', array( $this, 'mu_add_roles_after_activation' ), 10, 3 );
+    } else {
+	    add_action( 'user_register', array( $this, 'process_checklist' ) );
+    }
 	}
 
 	/**
@@ -27,7 +46,7 @@ class MDMR_Checklist_Controller {
 	 * @param string $hook The current admin screen.
 	 */
 	public function remove_dropdown( $hook ) {
-		if ( 'user-edit.php' !== $hook && 'user-new.php' !== $hook) {
+		if ( 'user-edit.php' !== $hook && 'user-new.php' !== $hook ) {
 			return;
 		}
 		wp_enqueue_script( 'md-multiple-roles', MDMR_URL . 'views/js/scripts.js', array( 'jquery' ), '1.0' );
@@ -40,7 +59,6 @@ class MDMR_Checklist_Controller {
 	 * @param object $user The current user object.
 	 */
 	public function output_checklist( $user ) {
-
 		if ( ! $this->model->can_update_roles() ) {
 			return;
 		}
@@ -50,7 +68,7 @@ class MDMR_Checklist_Controller {
 		$roles      = $this->model->get_editable_roles();
 		$user_roles = ( isset( $user->roles ) ) ? $user->roles : null;
 
-		include( apply_filters( 'mdmr_checklist_template', MDMR_PATH . 'views/checklist.html.php' ) );
+		include apply_filters( 'mdmr_checklist_template', MDMR_PATH . 'views/checklist.html.php' );
 
 	}
 
@@ -121,9 +139,9 @@ class MDMR_Checklist_Controller {
 		}
 
 		// Add multiple roles to a new array in meta var
-		$meta = maybe_unserialize( $meta );
+		$meta             = maybe_unserialize( $meta );
 		$meta['md_roles'] = $new_roles;
-		$meta = maybe_serialize( $meta );
+		$meta             = maybe_serialize( $meta );
 
 		// Update user signup with good meta
 		$where        = array( 'signup_id' => (int) $signup->signup_id );
@@ -137,7 +155,7 @@ class MDMR_Checklist_Controller {
 			return new WP_Error( 'md_update_user_signups_failed' );
 		}
 	}
-	
+
 	/**
 	 * Add roles in signup meta with WP 4.8 filter : better method
 	 *
@@ -155,22 +173,22 @@ class MDMR_Checklist_Controller {
 		if ( ! wp_verify_nonce( $_POST['md_multiple_roles_nonce'], 'update-md-multiple-roles' ) ) {
 			return;
 		}
-		
+
 		if ( ! $this->model->can_update_roles() ) {
 			return;
 		}
-		
+
 		$new_roles = ( isset( $_POST['md_multiple_roles'] ) && is_array( $_POST['md_multiple_roles'] ) ) ? $_POST['md_multiple_roles'] : array();
 		if ( empty( $new_roles ) ) {
 			return;
 		}
-		
+
 		$meta['md_roles'] = $new_roles;
-		
+
 		return $meta;
-		
+
 	}
-	
+
 	/**
 	 * Add multiple roles after user activation
 	 *
