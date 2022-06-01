@@ -64,6 +64,10 @@ Sure. The user will still be able to log in and out, but won't be able to access
 
 == Changelog ==
 
+= 1.3.6 =
+* 1st june 2022
+* SECURITY FIX: Validate that the user is allowed to change selected roles
+
 = 1.3.5 =
 * 27th may 2022
 * Test the plugin against WordPress 6.0

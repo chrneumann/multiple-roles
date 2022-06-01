@@ -67,12 +67,27 @@ class MDMR_Checklist_Controller {
 
 		$roles      = $this->model->get_editable_roles();
 		$user_roles = ( isset( $user->roles ) ) ? $user->roles : null;
-
+    $creating       = isset( $_POST['createuser'] );
+    $selected_roles = $creating ? $this->get_validated_roles_from_post() : [];
 		include apply_filters( 'mdmr_checklist_template', MDMR_PATH . 'views/checklist.html.php' );
-
 	}
 
 	/**
+	 * Retreives the roles from the POST data and validates them.
+	 */
+	public function get_validated_roles_from_post() {
+    $roles = ( isset( $_POST['md_multiple_roles'] ) && is_array( $_POST['md_multiple_roles'] ) ) ? $_POST['md_multiple_roles'] : array();
+    $editable_roles = $this->model->get_editable_roles();
+    $ret = [];
+    foreach ( $roles as $role ) {
+      if ( in_array( $role, $editable_roles ) ) {
+        $ret[] = $role;
+      }
+    }
+    return $roles;
+  }
+
+  /**
 	 * Update the given user's roles as long as we've passed the nonce
 	 * and permissions checks.
 	 *
@@ -95,7 +110,7 @@ class MDMR_Checklist_Controller {
 			return;
 		}
 
-		$new_roles = ( isset( $_POST['md_multiple_roles'] ) && is_array( $_POST['md_multiple_roles'] ) ) ? $_POST['md_multiple_roles'] : array();
+		$new_roles = $this->get_validated_roles_from_post();
 
 		$this->model->update_roles( $user_id, $new_roles );
 	}
@@ -121,7 +136,7 @@ class MDMR_Checklist_Controller {
 			return;
 		}
 
-		$new_roles = ( isset( $_POST['md_multiple_roles'] ) && is_array( $_POST['md_multiple_roles'] ) ) ? $_POST['md_multiple_roles'] : array();
+		$new_roles = $this->get_validated_roles_from_post();
 		if ( empty( $new_roles ) ) {
 			return;
 		}
@@ -178,7 +193,7 @@ class MDMR_Checklist_Controller {
 			return;
 		}
 
-		$new_roles = ( isset( $_POST['md_multiple_roles'] ) && is_array( $_POST['md_multiple_roles'] ) ) ? $_POST['md_multiple_roles'] : array();
+		$new_roles = $this->get_validated_roles_from_post();
 		if ( empty( $new_roles ) ) {
 			return;
 		}
@@ -186,7 +201,6 @@ class MDMR_Checklist_Controller {
 		$meta['md_roles'] = $new_roles;
 
 		return $meta;
-
 	}
 
 	/**

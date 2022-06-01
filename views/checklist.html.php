@@ -4,9 +4,10 @@
  *
  * @var $roles array All WordPress roles in name => label pairs.
  * @var $user_roles array An array of role names belonging to the current user.
+ *
+ * @package MultipleRoles
  */
-$creating       = isset( $_POST['createuser'] );
-$selected_roles = $creating && isset( $_POST['md_multiple_roles'] ) ? wp_unslash( $_POST['md_multiple_roles'] ) : '';
+
 ?>
 <h3><?php _e( 'Permissions', 'multiple-roles' ); ?></h3>
 <table class="form-table">
