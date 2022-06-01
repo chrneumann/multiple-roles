@@ -1,3 +1,4 @@
 build
 docker/wordpress
 node_modules
+vendor
