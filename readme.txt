@@ -21,7 +21,7 @@ It also supports well Multisite mode.
 
 That's it. No extra settings.
 
-If you want to contribute to this plugin, feel free to check the Github repository : https://github.com/Mahjouba91/multiple-roles
+If you want to contribute to this plugin, feel free to check the Github repository : https://github.com/chrneumann/multiple-roles
 
 == Installation ==
 
