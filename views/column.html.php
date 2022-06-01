@@ -9,11 +9,11 @@
 
 ?><div class="md-multiple-roles">
   <?php if ( ! empty( $roles ) ) : ?>
-    <?php $it = new CachingIterator( new ArrayIterator( $roles ) ); ?>
-    <?php foreach( $it as $name => $label ) : ?>
-      <a href="users.php?role=<?php echo esc_attr( $name ); ?>"><?php echo esc_html( translate_user_role( $label ) ) ?></a><?php if ( $it->hasNext() ) : ?>,<?php endif; ?>
-    <?php endforeach; ?>
+		<?php $it = new CachingIterator( new ArrayIterator( $roles ) ); ?>
+		<?php foreach ( $it as $name => $label ) : ?>
+	  <a href="users.php?role=<?php echo esc_attr( $name ); ?>"><?php echo esc_html( translate_user_role( $label ) ); ?></a><?php echo $it->hasNext() ? ',' : ''; ?>
+	<?php endforeach; ?>
   <?php else : ?>
-    <span class="md-multiple-roles-no-role"><?php _e('None', 'multiple-roles'); ?></span>
+	<span class="md-multiple-roles-no-role"><?php esc_html_e( 'None', 'multiple-roles' ); ?></span>
   <?php endif; ?>
 </div><!-- .md-multiple-roles -->

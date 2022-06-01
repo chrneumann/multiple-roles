@@ -23,8 +23,8 @@ class MDMR_Column_Controller {
 	 */
 	public function __construct( $model ) {
 		$this->model = $model;
-    add_filter( 'manage_users_columns', array( $this, 'replace_column' ), 11 );
-    add_filter( 'manage_users_custom_column', array( $this, 'output_column_content' ), 10, 3 );
+		add_filter( 'manage_users_columns', array( $this, 'replace_column' ), 11 );
+		add_filter( 'manage_users_custom_column', array( $this, 'output_column_content' ), 10, 3 );
 	}
 
 	/**
