@@ -2,7 +2,7 @@
 Contributors: SeventhSteel, mista-flo, cneumann
 Tags: multiple roles, multiple roles per user, user roles, edit user roles, edit roles, more than one role, more than one role per user, more than one role for each user, many roles per user, unlimited roles
 Requires at least: 3.1
-Tested up to: 6.0
+Tested up to: 6.3.2
 Stable tag: 1.3.7
 Requires PHP: 5.4
 Donate link: https://www.paypal.me/FlorianTIAR/5
