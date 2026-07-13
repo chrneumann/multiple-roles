@@ -1,5 +1,5 @@
-FROM wordpress:6.0
- 
+FROM docker.io/library/wordpress:7.0.1-php8.2-apache
+
 RUN addgroup --gid 1000 cneumann
 RUN adduser www-data cneumann
 

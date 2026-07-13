@@ -1,4 +1,5 @@
 build
-docker/wordpress
+container/wordpress
 node_modules
 vendor
+multiple-roles

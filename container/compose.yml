@@ -1,0 +1,35 @@
+services:
+  db:
+    image: docker.io/library/mysql:8
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    build:
+      context: .
+      dockerfile: Containerfile
+    userns_mode: "keep-id:uid=33,gid=33"
+    user: "0:0"
+    volumes:
+      - ./wordpress/:/var/www/html/:Z
+      - ../:/var/www/html/wp-content/plugins/multiple-roles/:ro,Z
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define('DEBUG_LOG', true);
+        define('DEBUG_DISPLAY', false);
+    # Ports mapping
+    ports:
+      - 8080:80
+
+volumes:
+  db_data:
