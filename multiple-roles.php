@@ -2,7 +2,7 @@
 /**
 Plugin Name: Multiple Roles
 Description: Allow users to have multiple roles on one site.
-Version: 1.3.7
+Version: 1.3.8
 Author: Christian Neumann
 Author URI: https://utopicode.de
 Plugin URI: https://wordpress.org/plugins/multiple-roles/

@@ -91,11 +91,11 @@ class MDMR_Checklist_Controller {
 		$editable_roles = $this->model->get_editable_roles();
 		$ret            = array();
 		foreach ( $roles as $role ) {
-			if ( in_array( $role, $editable_roles ) ) {
+			if ( array_key_exists( $role, $editable_roles ) ) {
 				$ret[] = $role;
 			}
 		}
-		return $roles;
+		return $ret;
 	}
 
 	/**
