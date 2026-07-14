@@ -11,7 +11,7 @@
   <?php if ( ! empty( $roles ) ) : ?>
 		<?php $it = new CachingIterator( new ArrayIterator( $roles ) ); ?>
 		<?php foreach ( $it as $name => $label ) : ?>
-	  <a href="users.php?role=<?php echo esc_attr( $name ); ?>"><?php echo esc_html( translate_user_role( $label ) ); ?></a><?php echo $it->hasNext() ? ',' : ''; ?>
+	  <a href="<?php echo esc_url( add_query_arg( 'role', $name, admin_url( 'users.php' ) ) ); ?>"><?php echo esc_html( translate_user_role( $label ) ); ?></a><?php echo $it->hasNext() ? ',' : ''; ?>
 	<?php endforeach; ?>
   <?php else : ?>
 	<span class="md-multiple-roles-no-role"><?php esc_html_e( 'None', 'multiple-roles' ); ?></span>
