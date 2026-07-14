@@ -68,6 +68,7 @@ Sure. The user will still be able to log in and out, but won't be able to access
 * 13th july 2026
 * SECURITY FIX: MDMR_Model::update_roles() now only grants roles that are in the current user's editable roles, instead of trusting the caller to have already filtered them
 * Fix get_validated_roles_from_post() so it actually returns the validated/filtered roles instead of the raw, unvalidated POST data, and correctly checks submitted role slugs against editable roles
+* Fix mu_add_roles_in_signup_meta_recently() returning null instead of $meta when validation fails, which could corrupt signup metadata on multisite
 
 = 1.3.6 / 1.3.7 =
 * 1st june 2022

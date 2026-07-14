@@ -194,16 +194,16 @@ class MDMR_Checklist_Controller {
 	 */
 	public function mu_add_roles_in_signup_meta_recently( $meta, $domain, $path, $title, $user, $user_email, $key ) {
 		if ( ! $this->is_nonce_valid( 'update-md-multiple-roles' ) ) {
-			return;
+			return $meta;
 		}
 
 		if ( ! $this->model->can_update_roles() ) {
-			return;
+			return $meta;
 		}
 
 		$new_roles = $this->get_validated_roles_from_post();
 		if ( empty( $new_roles ) ) {
-			return;
+			return $meta;
 		}
 
 		$meta['md_roles'] = $new_roles;
