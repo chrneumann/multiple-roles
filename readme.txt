@@ -2,7 +2,7 @@
 Contributors: SeventhSteel, mista-flo, cneumann
 Tags: multiple roles, multiple roles per user, user roles, edit user roles, edit roles, more than one role, more than one role per user, more than one role for each user, many roles per user, unlimited roles
 Requires at least: 3.1
-Tested up to: 6.3.2
+Tested up to: 7.0.1
 Stable tag: 1.3.8
 Requires PHP: 5.4
 Donate link: https://www.paypal.me/FlorianTIAR/5
@@ -65,7 +65,7 @@ Sure. The user will still be able to log in and out, but won't be able to access
 == Changelog ==
 
 = 1.3.8 =
-* 13th july 2026
+* 14th july 2026
 * SECURITY FIX: Properly validate that submitted roles are ones the current user is actually allowed to grant
 * Fix a bug on Multisite that could lose the selected roles during user signup
 * Thanks to Na Lee for reporting the issue
