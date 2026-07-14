@@ -80,6 +80,9 @@ class MDMR_Model {
 			$user->remove_role( $role );
 		}
 
+		// Only add back roles the current user is actually allowed to grant.
+		$roles = array_intersect( $roles, $editable_roles );
+
 		foreach ( $roles as $role ) {
 			$user->add_role( $role );
 		}
