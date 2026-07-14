@@ -68,6 +68,7 @@ Sure. The user will still be able to log in and out, but won't be able to access
 * 13th july 2026
 * SECURITY FIX: Properly validate that submitted roles are ones the current user is actually allowed to grant
 * Fix a bug on Multisite that could lose the selected roles during user signup
+* Thanks to Na Lee for reporting the issue
 
 = 1.3.6 / 1.3.7 =
 * 1st june 2022
