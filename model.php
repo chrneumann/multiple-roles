@@ -73,6 +73,10 @@ class MDMR_Model {
 
 		$user = get_user_by( 'id', (int) $user_id );
 
+		if ( ! $user ) {
+			return false;
+		}
+
 		// Remove all editable roles
 		$editable       = get_editable_roles();
 		$editable_roles = is_array( $editable ) ? array_keys( $editable ) : array();
